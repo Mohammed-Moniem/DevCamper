@@ -1,0 +1,19 @@
+{
+  "name": "devcamp",
+  "version": "1.0.0",
+  "description": "this is a demo devcamp project to apply some of node js advanced concepts ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index NODE_ENV=production",
+    "dev": "nodemon index"
+  },
+  "author": "mohammed osman",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
