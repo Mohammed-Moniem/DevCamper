@@ -5,12 +5,24 @@ const errorHandler = (err, req, res, next) => {
 
   error.message = err.message;
   //Log to console for development purposes
-  console.log(err.stack.red);
+  console.log(err);
 
   //mongoose bad ObjectId
   if (err.name === "CastError") {
     const message = `No BootCamp found with the id of ${err.value}`;
     error = new ErrorResponse(message, 404);
+  }
+
+  //Mongoose Duplicate Key
+  if (err.code === 11000) {
+    const message = "Values must be unique";
+    error = new ErrorResponse(message, 400);
+  }
+
+  //Mongoose Validation Error
+  if (err.name === "ValidationError") {
+    const message = Object.values(err.errors).map(value => value.message);
+    error = new ErrorResponse(message, 400);
   }
 
   res
