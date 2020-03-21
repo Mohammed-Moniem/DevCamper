@@ -4,7 +4,7 @@
   "description": "this is a demo devcamp project to apply some of node js advanced concepts ",
   "main": "index.js",
   "scripts": {
-    "start": "node index NODE_ENV=production",
+    "start": "node index",
     "dev": "nodemon index"
   },
   "author": "mohammed osman",
