@@ -1,6 +1,7 @@
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
 const geocoder = require("../utils/geocoder");
+const Course = require("../models/Course");
 
 //@Desc Get All Courses
 //@route  GET /api/v1/courses
