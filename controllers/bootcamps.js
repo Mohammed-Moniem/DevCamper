@@ -8,13 +8,74 @@ const geocoder = require("../utils/geocoder");
 //@access Public
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
   let query;
-  let queryStr = JSON.stringify(re.query);
+
+  const reqQuery = { ...req.query };
+
+  //Remove certain fields
+  const removeFields = ["select", "sort", "page", "limit"];
+
+  //Loop over removeFields and delete them from reqQuery
+  removeFields.forEach(param => delete reqQuery[param]);
+
+  //Create query string
+  let queryStr = JSON.stringify(reqQuery);
+
+  //create operators($gt, $gte, lt, lte, in)
   queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+
+  //Finding resourse
   query = Bootcamp.find(JSON.parse(queryStr));
+
+  //SELECT Fields
+  if (req.query.select) {
+    const fields = req.query.select.split(",").joint(" ");
+    query = query.select(fields);
+  }
+
+  //SORT Fields
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").joint(" ");
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort("-createdAt");
+  }
+
+  //Pagination
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 20;
+  const startIndex = (page - 1) * limit;
+  const endEndex = page * limit;
+  const total = await Bootcamp.countDocuments();
+
+  query = query.skip(startIndex).limit(limit);
+
+  //Excuting resourse
   const bootcamps = await query;
+
+  //Pagination result
+  const pagination = {};
+  if (endEndex < total) {
+    pagination.next = {
+      page: page + 1,
+      limit
+    };
+  }
+
+  if (startIndex > 0) {
+    pagination.prev = {
+      page: page - 1,
+      limit
+    };
+  }
+
   res
     .status(200)
-    .json({ success: true, count: bootcamps.length, data: bootcamps });
+    .json({
+      success: true,
+      count: bootcamps.length,
+      pagination,
+      data: bootcamps
+    });
 });
 
 // GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET

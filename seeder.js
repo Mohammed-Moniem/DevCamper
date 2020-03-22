@@ -11,6 +11,7 @@ dotenv.config({ path: "./config/config" });
 
 //Load Models
 const Bootcamp = require("./models/Bootcamp");
+const Course = require("./models/Course");
 
 const MONGURI =
   "mongodb://umkemcnmixvfnwuwyalq:vIHhTtYdVGhDIqN3lEys@bkfxjex1lhxu5w7-mongodb.services.clever-cloud.com:27017/bkfxjex1lhxu5w7";
@@ -30,10 +31,16 @@ const bootcamps = JSON.parse(
   fs.readFileSync(`${__dirname}/_data/bootcamps.json`, "utf-8")
 );
 
+//Read JSON files
+const courses = JSON.parse(
+  fs.readFileSync(`${__dirname}/_data/courses.json`, "utf-8")
+);
+
 //Import into DB
 const importData = async () => {
   try {
     await Bootcamp.create(bootcamps);
+    await Course.create(courses);
 
     console.log(`Data Imported...`.green.inverse.bold);
     process.exit();
@@ -46,6 +53,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Bootcamp.deleteMany();
+    await Course.deleteMany();
 
     console.log(`Data Destroyed...`.red.inverse.bold);
     process.exit();
@@ -55,7 +63,6 @@ const deleteData = async () => {
 };
 
 //Add arguement to specify the command to be excuted
-console.log(process.argv);
 if (process.argv[2] !== "-import" && process.argv[2] !== "-destroy") {
   console.log(
     `you entered ${process.argv[2]}, you need to use either -import to import the data or -destroy to delete data, please exit and try again`
