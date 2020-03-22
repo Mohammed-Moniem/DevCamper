@@ -117,7 +117,8 @@ BootcampSchema.pre("save", function(next) {
   next();
 });
 
-//GeoCoder to create a new location field
+// GeoCoder to create a new location field
+
 BootcampSchema.pre("save", async function(next) {
   // GET location using geocoder util
   const loc = await geocoder.geocode(this.address);
