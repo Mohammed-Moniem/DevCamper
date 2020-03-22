@@ -16,7 +16,7 @@ const MONGURI =
   "mongodb://umkemcnmixvfnwuwyalq:vIHhTtYdVGhDIqN3lEys@bkfxjex1lhxu5w7-mongodb.services.clever-cloud.com:27017/bkfxjex1lhxu5w7";
 
 //Connect to DB
-console.log(process.env.MONGO_URI);
+
 mongoose.connect(MONGURI, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -24,6 +24,7 @@ mongoose.connect(MONGURI, {
   useUnifiedTopology: true
 });
 
+console.log(`DB CONNECTED`.blue.bold.inverse);
 //Read JSON files
 const bootcamps = JSON.parse(
   fs.readFileSync(`${__dirname}/_data/bootcamps.json`, "utf-8")
@@ -54,8 +55,16 @@ const deleteData = async () => {
 };
 
 //Add arguement to specify the command to be excuted
-if (process.argv[2] === "-import") {
-  importData();
-} else if (process.argv[2] === "-destroy") {
-  deleteData();
+console.log(process.argv);
+if (process.argv[2] !== "-import" && process.argv[2] !== "-destroy") {
+  console.log(
+    `you entered ${process.argv[2]}, you need to use either -import to import the data or -destroy to delete data, please exit and try again`
+      .red.bold
+  );
+} else {
+  if (process.argv[2] === "-import") {
+    importData();
+  } else if (process.argv[2] === "-destroy") {
+    deleteData();
+  }
 }
