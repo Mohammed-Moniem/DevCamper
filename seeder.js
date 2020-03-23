@@ -28,24 +28,24 @@ mongoose.connect(MONGURI, {
 console.log(`DB CONNECTED`.blue.bold.inverse);
 //Read JSON files
 const bootcamps = JSON.parse(
-  fs.readFileSync(`${__dirname}/_data/bootcamps.json`, "utf-8")
+  fs.readFileSync(`${__dirname}\\_data\\bootcamps.json`, "utf-8")
 );
 
 //Read JSON files
 const courses = JSON.parse(
-  fs.readFileSync(`${__dirname}/_data/courses.json`, "utf-8")
+  fs.readFileSync(`${__dirname}\\_data\\courses.json`, "utf-8")
 );
 
 //Import into DB
 const importData = async () => {
   try {
     await Bootcamp.create(bootcamps);
-    await Course.create(courses);
+    //await Course.create(courses);
 
     console.log(`Data Imported...`.green.inverse.bold);
     process.exit();
   } catch (err) {
-    console.log(err.red);
+    console.log(`${err}`.red);
   }
 };
 
@@ -53,12 +53,12 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Bootcamp.deleteMany();
-    await Course.deleteMany();
+    //await Course.deleteMany();
 
     console.log(`Data Destroyed...`.red.inverse.bold);
     process.exit();
   } catch (err) {
-    console.log(err.red);
+    console.log(`${err}`.red);
   }
 };
 
