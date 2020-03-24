@@ -6,8 +6,8 @@ const errorHandler = require("./middleware/error");
 const connectDB = require("./config/db");
 
 //Import Route Files
-const users = require("./routes/users");
-const products = require("./routes/products");
+const bootcamps = require("./routes/bootcamps");
+const courses = require("./routes/courses");
 
 // Load env variables
 dotenv.config({ path: "./config/config.env" });
@@ -26,8 +26,8 @@ if (process.env.NODE_ENV === "development") {
 }
 
 //Mount routers
-app.use("/api/v1/users", users);
-app.use("/api/v1/products", products);
+app.use("/api/v1/bootcamps", bootcamps);
+app.use("/api/v1/courses", courses);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
