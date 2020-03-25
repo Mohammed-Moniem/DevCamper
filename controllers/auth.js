@@ -50,7 +50,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   //Create Token
   const token = user.getSignedJwtToken();
 
-  const option = {
+  const options = {
     expires: new Date(
       Date.now + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
@@ -66,3 +66,11 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie("token", token, options)
     .json({ success: true, token });
 };
+
+//@Desc   Get Current loggeed in user
+//@route  POST /api/v1/auth/
+//@access Public
+exports.getMyAccount = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  res.status(200).json({ success: true, data: user });
+});
