@@ -4,6 +4,8 @@ const geocoder = require("../utils/geocoder");
 const Course = require("../models/Course");
 const Bootcamp = require("../models/Bootcamp");
 
+// GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET
+
 //@Desc Get All Courses
 //@route  GET /api/v1/courses
 //@route  GET /api/v1/:bootcamp/courses
@@ -38,12 +40,14 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: course });
 });
 
+// POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST
+
 //@Desc Add Course
 //@route  POST /api/v1/boocamp/:bootcampId/courses
 //@access Private
 exports.createCourse = asyncHandler(async (req, res, next) => {
   req.body.bootcamp = req.params.bootcampId;
-
+  req.body.user = req.user.id;
   const bootcamp = await Bootcamp.findById(req.params.bootcampId);
   if (!bootcamp) {
     return next(
@@ -53,6 +57,17 @@ exports.createCourse = asyncHandler(async (req, res, next) => {
       )
     );
   }
+
+  //Make sure that this is the owner or admin
+  if (bootcamp.user.toString() !== req.user.id && req.user.role !== "admin") {
+    return next(
+      new ErrorResponse(
+        `User with the id of ${res.user.id} is not authorized to add a course to Bootcamp with the id of ${bootcamp._id}`,
+        401
+      )
+    );
+  }
+
   const course = await Course.create(req.body);
   res.status(200).json({ success: true, data: course });
 });
