@@ -11,6 +11,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const helemt = require("helmet");
 const xss = require("xss-clean");
 const hpp = require("hpp");
+const cors = require("cors");
 const rateLimiting = require("express-rate-limit");
 
 //Import Route Files
@@ -46,6 +47,9 @@ app.use(limiter);
 
 //Prevent http param pollution
 app.use(hpp());
+
+//Enable Cors
+app.use(cors());
 
 //Set security headers
 app.use(helmet());
