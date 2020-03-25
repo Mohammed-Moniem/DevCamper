@@ -1,65 +1,59 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const config = require("config");
-const Joi = require("joi");
-const PasswordComplexity = require("joi-password-complexity");
 
-const schema = new mongoose.Schema({
-  username: {
+const UserSchema = new mongoose.Schema({
+  name: {
     type: String,
-    required: true,
-    minlength: 4,
-    maxlength: 30,
-    unique: [true, "username must be unique"]
+    required: [true, "Name is required"]
   },
-  password: {
+  email: {
     type: String,
-    required: true,
-    minlength: 6,
-    maxlength: 255
-  },
-  avatar: {
-    type: String
+    required: [true, "Please add an email is required"],
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "Please add a valid email"
+    ]
   },
   role: {
     type: String,
-    enum: ["user", "admin"]
+    enum: ["user", "publisher"],
+    default: "user"
+  },
+  password: {
+    type: String,
+    required: [true, "Please add a password"],
+    minlength: 6,
+    select: false
+  },
+  resetPasswordToken: {
+    type: String
+  },
+  resetPasswordExpiration: {
+    type: Date
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 
-schema.methods.genJwt = function() {
-  return jwt.sign(
-    {
-      _id: this._id,
-      username: this.username,
-      role: this.role
-    },
-    config.get("jwtSecret")
-  );
-};
-const User = mongoose.model("User", schema);
+// Encrpyt password using bcrypt
+UserSchema.pre("save", async function(next) {
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
 
-const validate = function(user) {
-  const schema = {
-    username: Joi.string()
-      .required()
-      .min(4)
-      .max(30),
-    password: new PasswordComplexity({
-      min: 6,
-      max: 26,
-      lowerCase: 1,
-      upperCase: 1,
-      numeric: 1,
-      symbol: 0,
-      requirmentCount: 3
-    }),
-    avatar: Joi.string().allow(""),
-    role: Joi.string().valid("user", "admin")
-  };
-
-  return Joi.validate(user, schema);
+// Sign JWT and return
+UserSchema.methods.getSignedJwtToken = function() {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE
+  });
 };
 
-exports.User = User;
-exports.validate = validate;
+//match user entered password to hashed password in DB
+UserSchema.methods.matchPassword = async function(enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
+module.exports = mongoose.model("User", UserSchema);

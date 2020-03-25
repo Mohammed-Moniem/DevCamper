@@ -40,7 +40,7 @@ const courses = JSON.parse(
 const importData = async () => {
   try {
     await Bootcamp.create(bootcamps);
-    //await Course.create(courses);
+    await Course.create(courses);
 
     console.log(`Data Imported...`.green.inverse.bold);
     process.exit();
@@ -53,7 +53,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Bootcamp.deleteMany();
-    //await Course.deleteMany();
+    await Course.deleteMany();
 
     console.log(`Data Destroyed...`.red.inverse.bold);
     process.exit();
