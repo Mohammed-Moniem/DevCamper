@@ -9,6 +9,9 @@ const connectDB = require("./config/db");
 const path = require("path");
 const mongoSanitize = require("express-mongo-sanitize");
 const helemt = require("helmet");
+const xss = require("xss-clean");
+const hpp = require("hpp");
+const rateLimiting = require("express-rate-limit");
 
 //Import Route Files
 const auth = require("./routes/auth");
@@ -27,11 +30,25 @@ const app = express();
 //Body parser
 app.use(express.json());
 
-//Set security headers
-app.use(helmet);
-
 //Prevent NoSQL injections
 app.use(mongoSanitize());
+
+//Prevent XSS scripting
+app.use(xss());
+
+//Rate Limit
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10mins
+  max: 100
+});
+
+app.use(limiter);
+
+//Prevent http param pollution
+app.use(hpp());
+
+//Set security headers
+app.use(helmet());
 
 //Enable cookie parser
 app.use(cookieParser());
