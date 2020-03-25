@@ -8,11 +8,11 @@ const errorHandler = require("./middleware/error");
 const connectDB = require("./config/db");
 const path = require("path");
 const mongoSanitize = require("express-mongo-sanitize");
-const helemt = require("helmet");
+const helmet = require("helmet");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const cors = require("cors");
-const rateLimiting = require("express-rate-limit");
+const rateLimit = require("express-rate-limit");
 
 //Import Route Files
 const auth = require("./routes/auth");
