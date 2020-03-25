@@ -11,7 +11,7 @@ const {
 } = require("../controllers/auth");
 
 const router = express.Router();
-
+//Import Middleware
 const { protect } = require("../middleware/auth");
 
 router.post("/register", register);

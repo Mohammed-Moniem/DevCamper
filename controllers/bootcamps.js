@@ -80,6 +80,8 @@ exports.createBootcamp = asyncHandler(async (req, res, next) => {
   res.status(201).json({ success: true, data: bootcamp });
 });
 
+// PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT
+
 //@Desc Update new Bootcamp
 //@route  PUT /api/v1/bootcamps/:id
 //@access Private

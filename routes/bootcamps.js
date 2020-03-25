@@ -10,8 +10,8 @@ const {
 } = require("../controllers/bootcamps");
 //Import Models
 const Bootcamp = require("../models/Bootcamp");
+//Import Middleware
 const { protect, authorize } = require("../middleware/auth");
-
 const advancedResults = require("../middleware/advancedResults");
 
 //Include other resourse router

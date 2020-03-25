@@ -2,6 +2,8 @@ const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
 const User = require("../models/User");
 
+// GET GET GET GET GET GET GET GET GET GET GET GET GET GET
+
 // @desc      Get all users
 // @route     GET /api/v1/auth/users
 // @access    Private/Admin
@@ -21,6 +23,8 @@ exports.getUser = asyncHandler(async (req, res, next) => {
   });
 });
 
+// POST POST POST POST POST POST POST POST POST POST POST POST POST POST
+
 // @desc      Create user
 // @route     POST /api/v1/auth/users
 // @access    Private/Admin
@@ -32,6 +36,8 @@ exports.createUser = asyncHandler(async (req, res, next) => {
     data: user
   });
 });
+
+// PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT
 
 // @desc      Update user
 // @route     PUT /api/v1/auth/users/:id
@@ -47,6 +53,8 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
     data: user
   });
 });
+
+// DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE
 
 // @desc      Delete user
 // @route     DELETE /api/v1/auth/users/:id

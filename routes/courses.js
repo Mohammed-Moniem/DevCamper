@@ -6,6 +6,8 @@ const {
   updateCourse,
   deleteCourse
 } = require("../controllers/courses");
+
+//Import Middleware
 const { protect, authorize } = require("../middleware/auth");
 
 const router = express.Router({ mergeParams: true });

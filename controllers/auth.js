@@ -77,6 +77,8 @@ exports.logout = asyncHandler(async (req, res, next) => {
   });
 });
 
+// PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT
+
 // @desc      Update user details
 // @route     PUT /api/v1/auth/updatedetails
 // @access    Private

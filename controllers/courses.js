@@ -72,6 +72,8 @@ exports.createCourse = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: course });
 });
 
+// PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT
+
 //@Desc    Update Course
 //@route  PUT /api/v1/:id
 //@access Private
@@ -98,6 +100,8 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
   });
   res.status(200).json({ success: true, data: course });
 });
+
+// DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE
 
 //@Desc    Delete Course
 //@route  DELETE /api/v1/:id

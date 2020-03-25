@@ -11,6 +11,7 @@ const User = require("../models/User");
 
 const router = express.Router({ mergeParams: true });
 
+//Import Middleware
 const advancedResults = require("../middleware/advancedResults");
 const { protect, authorize } = require("../middleware/auth");
 
