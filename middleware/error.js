@@ -9,7 +9,7 @@ const errorHandler = (err, req, res, next) => {
 
   //mongoose bad ObjectId
   if (err.name === "CastError") {
-    const message = `No BootCamp found with the id of ${err.value}`;
+    const message = `No BootCamp found`;
     error = new ErrorResponse(message, 404);
   }
 
