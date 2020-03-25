@@ -8,6 +8,7 @@ const errorHandler = require("./middleware/error");
 const connectDB = require("./config/db");
 const path = require("path");
 const mongoSanitize = require("express-mongo-sanitize");
+const helemt = require("helmet");
 
 //Import Route Files
 const auth = require("./routes/auth");
@@ -25,6 +26,9 @@ const app = express();
 
 //Body parser
 app.use(express.json());
+
+//Set security headers
+app.use(helmet);
 
 //Prevent NoSQL injections
 app.use(mongoSanitize());

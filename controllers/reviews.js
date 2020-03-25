@@ -1,7 +1,9 @@
-const ErrorResponse = require('../utils/errorResponse');
-const asyncHandler = require('../middleware/async');
-const Review = require('../models/Review');
-const Bootcamp = require('../models/Bootcamp');
+const ErrorResponse = require("../utils/errorResponse");
+const asyncHandler = require("../middleware/async");
+const Review = require("../models/Review");
+const Bootcamp = require("../models/Bootcamp");
+
+// GET GET GET GET GET GET GET GET GET GET GET GET GET GET
 
 // @desc      Get reviews
 // @route     GET /api/v1/reviews
@@ -26,8 +28,8 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
 // @access    Public
 exports.getReview = asyncHandler(async (req, res, next) => {
   const review = await Review.findById(req.params.id).populate({
-    path: 'bootcamp',
-    select: 'name description'
+    path: "bootcamp",
+    select: "name description"
   });
 
   if (!review) {
@@ -41,6 +43,8 @@ exports.getReview = asyncHandler(async (req, res, next) => {
     data: review
   });
 });
+
+// POST POST POST POST POST POST POST POST POST POST POST POST POST POST
 
 // @desc      Add review
 // @route     POST /api/v1/bootcamps/:bootcampId/reviews
@@ -68,6 +72,8 @@ exports.addReview = asyncHandler(async (req, res, next) => {
   });
 });
 
+// PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT PUT
+
 // @desc      Update review
 // @route     PUT /api/v1/reviews/:id
 // @access    Private
@@ -81,7 +87,7 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
   }
 
   // Make sure review belongs to user or user is admin
-  if (review.user.toString() !== req.user.id && req.user.role !== 'admin') {
+  if (review.user.toString() !== req.user.id && req.user.role !== "admin") {
     return next(new ErrorResponse(`Not authorized to update review`, 401));
   }
 
@@ -96,6 +102,8 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
   });
 });
 
+// DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE
+
 // @desc      Delete review
 // @route     DELETE /api/v1/reviews/:id
 // @access    Private
@@ -109,7 +117,7 @@ exports.deleteReview = asyncHandler(async (req, res, next) => {
   }
 
   // Make sure review belongs to user or user is admin
-  if (review.user.toString() !== req.user.id && req.user.role !== 'admin') {
+  if (review.user.toString() !== req.user.id && req.user.role !== "admin") {
     return next(new ErrorResponse(`Not authorized to update review`, 401));
   }
 
